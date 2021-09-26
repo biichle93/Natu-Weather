@@ -9,8 +9,8 @@ const Weather = (props)=>{
                     <i className="wi wi-day-sunny display-1"></i>
                 </h5>
                 <h1 className="py-1">{props.temp}&deg;</h1>
-                {minMaxTemp(12, 45)}
-                <h4 className="py-1">Sunny</h4>
+                {minMaxTemp(props.mintemp, props.maxtemp)}
+                <h4 className="py-1">{props.general}</h4>
             </div>
         </div>
     )

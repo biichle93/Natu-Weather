@@ -15,6 +15,10 @@ class App extends React.Component {
         city: undefined,
         country: undefined,
         temp: undefined,
+        maxtemp: undefined,
+        mintemp: undefined,
+        general: undefined,
+
       };
       this.getWeather()
     }
@@ -24,14 +28,17 @@ class App extends React.Component {
       const response = await APIcall.json();
       console.log(response);
       const kelvinToFahrenheit = require('kelvin-to-fahrenheit');
-      this.setState({city: response.name, country: response.sys.country, temp: kelvinToFahrenheit(response.main.temp).toFixed(1)
+      this.setState({city: response.name, country: response.sys.country, temp: kelvinToFahrenheit(response.main.temp).toFixed(1),
+      mintemp: kelvinToFahrenheit(response.main.temp_min).toFixed(1), maxtemp: kelvinToFahrenheit(response.main.temp_max).toFixed(1),
+      general: response.weather[0].description,
       })
     };
 
     render() {
     return (
       <div className="App">
-      <Weather city ={this.state.city} country={this.state.country} temp ={this.state.temp}/>
+      <Weather city ={this.state.city} country={this.state.country} temp ={this.state.temp} mintemp ={this.state.mintemp} maxtemp ={this.state.maxtemp} general = {this.state.general}
+      />
       </div>
     );
   }
