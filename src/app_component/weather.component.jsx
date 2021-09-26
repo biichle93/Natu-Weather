@@ -6,7 +6,7 @@ const Weather = (props)=>{
             <div className="cards">
                 <h1>{props.city},{props.country}</h1>
                 <h5 className="py-2">
-                    <i className="wi wi-day-sunny display-1"></i>
+                <i className={`wi ${props.icon} display-1`}></i>
                 </h5>
                 <h1 className="py-1">{props.temp}&deg;</h1>
                 {minMaxTemp(props.mintemp, props.maxtemp)}

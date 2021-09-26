@@ -18,13 +18,19 @@ class App extends React.Component {
         maxtemp: undefined,
         mintemp: undefined,
         general: undefined,
+        icon: undefined,
 
       };
       this.getWeather()
+
+      this.icon = {
+        Thunderstorm: "wi-thunderstorm"
+        
+      }
     }
 
     getWeather = async() =>{
-      const APIcall = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=${API_key}`);
+      const APIcall = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=Miami,FL,USA&appid=${API_key}`);
       const response = await APIcall.json();
       console.log(response);
       const kelvinToFahrenheit = require('kelvin-to-fahrenheit');
@@ -35,6 +41,7 @@ class App extends React.Component {
         mintemp: kelvinToFahrenheit(response.main.temp_min).toFixed(1),
         maxtemp: kelvinToFahrenheit(response.main.temp_max).toFixed(1),
         general: response.weather[0].description,
+        icon: this.icon.Thunderstorm,
       })
     };
 
@@ -48,6 +55,7 @@ class App extends React.Component {
       mintemp ={this.state.mintemp}
       maxtemp ={this.state.maxtemp} 
       general = {this.state.general}
+      icon = {this.state.icon}
       />
       </div>
     );
