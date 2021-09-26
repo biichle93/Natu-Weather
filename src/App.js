@@ -18,19 +18,51 @@ class App extends React.Component {
         maxtemp: undefined,
         mintemp: undefined,
         general: undefined,
-        icon: undefined,
 
       };
       this.getWeather()
 
       this.icon = {
-        Thunderstorm: "wi-thunderstorm"
-        
+        Thunderstorm: "wi-thunderstorm",
+        Drizzle: "wi-sleet",
+        Rain: "wi-storm-showers",
+        Snow: "wi-snow",
+        Atmosphere: "wi-fog",
+        Clear: "wi-day-sunny",
+        Clouds: "wi-day-fog",
+      }
+    }
+
+    get_Icon(icons, weatherId){
+      switch(true){
+        case weatherId >= 200 && weatherId <= 232:
+          this.setState({icon: this.icon.Thunderstorm})
+          break
+        case weatherId >= 300 && weatherId <= 321:
+          this.setState({icon: this.icon.Drizzle})
+          break
+        case weatherId >= 500 && weatherId <= 531:
+          this.setState({icon: this.icon.Rain})
+          break
+        case weatherId >= 600 && weatherId <= 622:
+          this.setState({icon: this.icon.Snow})
+          break
+        case weatherId >= 701 && weatherId <= 781:
+          this.setState({icon: this.icon.Atmosphere})
+          break
+        case weatherId === 800:
+          this.setState({icon: this.icon.Clear})
+          break
+        case weatherId >= 801 && weatherId <= 804:
+          this.setState({icon: this.icon.Clouds})
+          break
+        default:this.setState({icon: this.icon.Clouds})
+
       }
     }
 
     getWeather = async() =>{
-      const APIcall = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=Miami,FL,USA&appid=${API_key}`);
+      const APIcall = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=Raleigh,NC,USA&appid=${API_key}`);
       const response = await APIcall.json();
       console.log(response);
       const kelvinToFahrenheit = require('kelvin-to-fahrenheit');
@@ -43,6 +75,8 @@ class App extends React.Component {
         general: response.weather[0].description,
         icon: this.icon.Thunderstorm,
       })
+
+      this.get_Icon(this.icon, response.weather[0].id);
     };
 
     render() {
